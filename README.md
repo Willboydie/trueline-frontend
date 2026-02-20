@@ -1,4 +1,4 @@
-# TrueLine Lasers
+# TrueLine Lasers Frontend
 
 Marketing site for TrueLine Lasers.
 
