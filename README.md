@@ -5,22 +5,22 @@
 1. Clone the repository
 2. Navigate to the project directory
 3. Install dependencies: `npm install`
-4. Optionally create `.env.local` for environment variables:
+4. For testing locally, create `.env.local` for environment variables:
 
 ```
-VITE_API_URL=https://your-api-url.com
-```
-
-## Run the app
-
-```bash
-npm run dev
+VITE_API_URL=http://localhost:3001
 ```
 
 ## Build
 
 ```bash
 npm run build
+```
+
+## Preview (see in browser)
+
+```bash
+npm run preview
 ```
 
 ## Implementing backends
