@@ -1,7 +1,5 @@
 # TrueLine Lasers Frontend
 
-Marketing site for TrueLine Lasers.
-
 ## Prerequisites
 
 1. Clone the repository
