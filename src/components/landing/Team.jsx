@@ -12,17 +12,17 @@ export default function Team() {
       accent: "from-[#0A1E3A] to-[#123D73]"
     },
     {
-      name: "Dr. Fraser Clark",
-      role: "Optics & Engineering",
-      icon: Microscope,
-      bio: "Specialist in optics and engineering, bringing precision laser technology to construction applications.",
+      name: "William Boyd",
+      role: "Technical Director",
+      icon: Code,
+      bio: "Lead developer and head of product research and development.",
       accent: "from-[#0A1E3A] to-[#123D73]"
     },
     {
-      name: "Will Boyd",
-      role: "Software Development",
-      icon: Code,
-      bio: "Lead programmer responsible for software development at TrueLine Lasers, creating intuitive control systems.",
+      name: "Dr. Fraser Clark",
+      role: "Optics & Engineering",
+      icon: Microscope,
+      bio: "Specialist in optics, electrical engineering and embedded systems, bringing precision laser technology to construction applications.",
       accent: "from-[#0A1E3A] to-[#123D73]"
     }
   ];

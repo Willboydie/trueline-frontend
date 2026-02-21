@@ -77,7 +77,7 @@ export default function Hero() {
               <div className="text-sm sm:text-base text-[#4A4A4A] font-light">Faster Setup Time</div>
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">±2mm</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">±2cm</div>
               <div className="text-sm sm:text-base text-[#4A4A4A] font-light">Positional Accuracy</div>
             </div>
             <div>
