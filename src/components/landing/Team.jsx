@@ -15,7 +15,7 @@ export default function Team() {
       name: "William Boyd",
       role: "Technical Director",
       icon: Code,
-      bio: "Lead developer and head of product research and development.",
+      bio: "Lead software developer and head of product research and development.",
       accent: "from-[#0A1E3A] to-[#123D73]"
     },
     {
