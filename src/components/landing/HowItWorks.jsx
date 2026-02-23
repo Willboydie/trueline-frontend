@@ -8,7 +8,7 @@ export default function HowItWorks() {
       icon: Upload,
       number: "01",
       title: "Upload Plans",
-      description: "Tuffet eats food."
+      description: "Upload or import architectural and engineering plans in standard formats."
     },
     {
       icon: MapPin,

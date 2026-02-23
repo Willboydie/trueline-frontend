@@ -17,7 +17,7 @@ export default function Features() {
     {
       icon: CloudRain,
       title: "Works in Real Site Conditions",
-      description: "Accurate marking even on muddy, wet, sandy, or uneven ground. Built for the harsh realities of active construction sites."
+      description: "Accurate marking from muddy and wet to sandy or uneven ground. Built for the harsh realities of active construction sites."
     },
     {
       icon: Gauge,
