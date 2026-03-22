@@ -114,7 +114,7 @@ export default function HeroSection() {
           >
             {[
               { value: "10×", label: "Faster Setup" },
-              { value: "±2mm", label: "Accuracy" },
+              { value: "±20mm", label: "Accuracy" },
               { value: "50%", label: "Labour Savings" },
             ].map((stat) => (
               <div key={stat.label}>

@@ -73,15 +73,15 @@ export default function Hero() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mt-16 sm:mt-24 lg:mt-32 pt-16 sm:pt-24 lg:pt-32 border-t border-[#1D1D1F]/10"
           >
             <div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">75%</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">10×</div>
               <div className="text-sm sm:text-base text-[#4A4A4A] font-light">Faster Setup Time</div>
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">±2cm</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">±20mm</div>
               <div className="text-sm sm:text-base text-[#4A4A4A] font-light">Positional Accuracy</div>
             </div>
             <div>
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">50%</div>
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-2 sm:mb-3">50%+</div>
               <div className="text-sm sm:text-base text-[#4A4A4A] font-light">Reduction in Labour Costs</div>
             </div>
           </motion.div>
