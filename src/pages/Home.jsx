@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0E0E10] overflow-x-hidden">
+    <div className="min-h-screen bg-[#0E0E10] overflow-x-hidden pt-[32rem] lg:pt-[40rem]">
       <StickyHeader />
       <Hero />
       <ProblemSection />

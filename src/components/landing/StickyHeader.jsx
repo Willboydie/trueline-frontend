@@ -46,7 +46,7 @@ export default function StickyHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap items-center justify-between gap-6 min-h-[32rem] lg:min-h-[40rem] py-6 lg:py-10">
         {/* Logo / home */}
         <Link
           to="/"
@@ -57,18 +57,18 @@ export default function StickyHeader() {
           <img
             src="/TrueLine Logo.png"
             alt=""
-            className="h-9 lg:h-11 w-auto object-contain object-left"
+            className="h-[18rem] lg:h-[22rem] w-auto max-w-[min(100%,56rem)] object-contain object-left"
             decoding="async"
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-2 flex-wrap justify-end">
           {navLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => handleNav(link.href)}
-              className="px-4 py-2.5 text-sm text-[#4A4A4A] hover:text-[#1D1D1F] transition-colors duration-200 rounded-lg font-medium"
+              className="px-8 py-5 text-2xl text-[#4A4A4A] hover:text-[#1D1D1F] transition-colors duration-200 rounded-2xl font-medium"
             >
               {link.label}
             </button>
@@ -78,7 +78,7 @@ export default function StickyHeader() {
         {/* Desktop CTA */}
         <button
           onClick={() => handleNav("#contact")}
-          className="hidden lg:block px-6 py-3 bg-[#1B5E20] hover:bg-[#154A19] text-white text-sm font-medium rounded-xl transition-all duration-200"
+          className="hidden lg:block px-12 py-6 bg-[#1B5E20] hover:bg-[#154A19] text-white text-2xl font-medium rounded-3xl transition-all duration-200"
         >
           Request a Demo
         </button>
@@ -86,9 +86,11 @@ export default function StickyHeader() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden text-[#1D1D1F] p-2"
+          className="lg:hidden text-[#1D1D1F] p-6"
+          aria-expanded={mobileOpen}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileOpen ? <X className="w-12 h-12" /> : <Menu className="w-12 h-12" />}
         </button>
       </div>
 
@@ -101,19 +103,19 @@ export default function StickyHeader() {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-white/98 backdrop-blur-xl border-t border-[#1D1D1F]/10 overflow-hidden"
           >
-            <div className="px-6 py-6 flex flex-col gap-2">
+            <div className="px-6 py-8 flex flex-col gap-3">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
                   onClick={() => handleNav(link.href)}
-                  className="text-left px-5 py-4 text-[#4A4A4A] hover:text-[#1D1D1F] rounded-xl transition-colors font-medium"
+                  className="text-left px-6 py-5 text-xl text-[#4A4A4A] hover:text-[#1D1D1F] rounded-2xl transition-colors font-medium"
                 >
                   {link.label}
                 </button>
               ))}
               <button
                 onClick={() => handleNav("#contact")}
-                className="mt-4 px-5 py-4 bg-[#1B5E20] hover:bg-[#154A19] text-white font-medium rounded-xl transition-colors"
+                className="mt-4 px-6 py-5 bg-[#1B5E20] hover:bg-[#154A19] text-white text-xl font-medium rounded-2xl transition-colors"
               >
                 Request a Demo
               </button>
