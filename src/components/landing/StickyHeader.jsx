@@ -46,7 +46,7 @@ export default function StickyHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between min-h-24 lg:min-h-28 py-2">
         {/* Logo / home */}
         <Link
           to="/"
@@ -57,7 +57,7 @@ export default function StickyHeader() {
           <img
             src="/TrueLine Logo.png"
             alt=""
-            className="h-9 lg:h-11 w-auto object-contain object-left"
+            className="h-[4.5rem] lg:h-[5.5rem] w-auto max-w-[min(100%,20rem)] object-contain object-left"
             decoding="async"
           />
         </Link>
