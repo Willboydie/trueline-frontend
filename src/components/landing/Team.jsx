@@ -13,16 +13,16 @@ export default function Team() {
     },
     {
       name: "William Boyd",
-      role: "Technical Director",
+      role: "Co-Founder, Head of Research & Development",
       icon: Code,
-      bio: "Lead software developer and head of product research and development.",
+      bio: "Mathematics graduate and embedded systems programmer. Responsible for prototype development and delivery.",
       accent: "from-[#0A1E3A] to-[#123D73]"
     },
     {
       name: "Dr. Fraser Clark",
-      role: "Optics & Engineering",
+      role: "Co-Founder, Electronics & Optics Specialist",
       icon: Microscope,
-      bio: "Specialist in optics, electrical engineering and embedded systems, bringing precision laser technology to construction applications.",
+      bio: "Specialist in optics, electrical engineering and embedded systems, bringing deep technical expertise to the TrueLine research & development team.",
       accent: "from-[#0A1E3A] to-[#123D73]"
     }
   ];

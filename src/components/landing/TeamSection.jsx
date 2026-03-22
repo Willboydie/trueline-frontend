@@ -10,14 +10,14 @@ const team = [
   },
   {
     name: "Dr. Fraser Clark",
-    role: "Optics & Engineering",
-    bio: "Specialist in optics and engineering, bringing deep technical expertise to laser projection systems.",
+    role: "Co-Founder, Electronics & Optics Specialist",
+    bio: "Bringing deep technical expertise to the TrueLine research & development team.",
     initials: "FC",
   },
   {
-    name: "Will Boyd",
-    role: "Software Development",
-    bio: "Lead programmer responsible for software development at TrueLine Lasers.",
+    name: "William Boyd",
+    role: "Co-Founder, Head of Research & Development",
+    bio: "Mathematics graduate and embedded systems programmer. Responsible for the delivery of the Smart Marker prototype.",
     initials: "WB",
   },
 ];

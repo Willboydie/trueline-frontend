@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -13,6 +14,7 @@ const navLinks = [
 ];
 
 export default function StickyHeader() {
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -28,6 +30,14 @@ export default function StickyHeader() {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleHomeClick = (e) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setMobileOpen(false);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -37,15 +47,20 @@ export default function StickyHeader() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16 lg:h-20">
-        {/* Logo */}
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-lg bg-[#1B5E20] flex items-center justify-center">
-            <div className="w-4 h-0.5 bg-white rounded-full" />
-          </div>
-          <span className="text-[#1D1D1F] font-bold text-xl tracking-tight">
-            TrueLine
-          </span>
-        </button>
+        {/* Logo / home */}
+        <Link
+          to="/"
+          onClick={handleHomeClick}
+          className="flex items-center shrink-0 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1B5E20]"
+          aria-label="TrueLine home"
+        >
+          <img
+            src="/TrueLine Logo.png"
+            alt=""
+            className="h-9 lg:h-11 w-auto object-contain object-left"
+            decoding="async"
+          />
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
