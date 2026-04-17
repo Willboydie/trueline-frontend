@@ -15,10 +15,19 @@ Zero npm dependencies — uses the Node.js 20+ built-in `fetch`.
 ### 1. Resend
 
 1. Create an account at <https://resend.com>.
-2. **Add domain** → `truelinelasers.com`. Copy the DNS records Resend shows
-   you (SPF `TXT`, DKIM `CNAME`s, usually a DMARC `TXT`) and add them to the
-   DNS zone for `truelinelasers.com`. Wait for Resend to mark the domain
+2. **Add domain** → `mail.truelinelasers.com` (a sending subdomain — keeps
+   reputation isolated from the apex and avoids touching your existing
+   inbound MX). Copy the DNS records Resend shows you (SPF `TXT`, DKIM
+   `CNAME`s, usually a DMARC `TXT`, and possibly a bounce-handling
+   `MX`/`CNAME` on `send.mail.truelinelasers.com`) and add them to the
+   DNS zone for `truelinelasers.com` — the hostnames Resend gives you
+   already include the `mail.` prefix. Wait for Resend to mark the domain
    **Verified** (usually minutes, up to 24 h).
+
+   > Cloudflare gotcha: the UI auto-strips the zone, so verify each saved
+   > record's full name doesn't end up doubled (`…mail.truelinelasers.com.truelinelasers.com`).
+   > Do **not** add an MX record on the apex for sending; only add what
+   > Resend tells you to, and only on `mail.…`.
 3. **API Keys** → Create API Key → scope it to **Sending access** only.
    Copy the key (starts with `re_...`). You'll paste it into Lambda in step 3.
 
@@ -43,7 +52,7 @@ with API Gateway in the next step.
    | Key                  | Value                                                     |
    | -------------------- | --------------------------------------------------------- |
    | `RESEND_API_KEY`     | `re_...` (from step 1)                                    |
-   | `FROM_EMAIL`         | `TrueLine Lasers <noreply@truelinelasers.com>`            |
+   | `FROM_EMAIL`         | `TrueLine Lasers <noreply@mail.truelinelasers.com>`       |
    | `TO_EMAIL_PRIMARY`   | `info@james-hutchison.com`                                |
    | `TO_EMAIL_SECONDARY` | `williamteboyd@gmail.com`                                 |
    | `ALLOWED_ORIGIN`     | `https://www.truelinelasers.com`                          |
@@ -62,7 +71,7 @@ aws lambda create-function \
   --handler index.handler \
   --zip-file fileb://../send-email.zip \
   --timeout 10 --memory-size 256 \
-  --environment "Variables={RESEND_API_KEY=re_xxx,FROM_EMAIL='TrueLine Lasers <noreply@truelinelasers.com>',TO_EMAIL_PRIMARY=info@james-hutchison.com,TO_EMAIL_SECONDARY=williamteboyd@gmail.com,ALLOWED_ORIGIN=https://www.truelinelasers.com}"
+  --environment "Variables={RESEND_API_KEY=re_xxx,FROM_EMAIL='TrueLine Lasers <noreply@mail.truelinelasers.com>',TO_EMAIL_PRIMARY=info@james-hutchison.com,TO_EMAIL_SECONDARY=williamteboyd@gmail.com,ALLOWED_ORIGIN=https://www.truelinelasers.com}"
 ```
 
 The execution role needs only the AWS-managed `AWSLambdaBasicExecutionRole`
