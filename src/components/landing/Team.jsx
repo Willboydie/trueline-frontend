@@ -63,7 +63,7 @@ export default function Team() {
                   src={member.photo}
                   alt={member.name}
                   className="w-full h-full object-cover"
-                  style={{ objectPosition: "center 80%" }}
+                  style={{ objectPosition: "center 65%" }}
                 />
               </div>
 
