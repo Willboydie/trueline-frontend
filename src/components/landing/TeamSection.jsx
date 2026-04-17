@@ -20,6 +20,12 @@ const team = [
     bio: "Mathematics graduate and embedded systems programmer. Responsible for the delivery of the Smart Marker prototype.",
     initials: "WB",
   },
+  {
+    name: "Vedika Kumar",
+    role: "Technical Graduate Intern",
+    bio: "With a master's degree in Sensors and Imaging from Glasgow and Edinburgh universities, Vedika is a bright spark bringing fresh ideas to the technical development.",
+    initials: "VK",
+  },
 ];
 
 export default function TeamSection() {
@@ -43,7 +49,7 @@ export default function TeamSection() {
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {team.map((member, i) => (
             <motion.div
               key={member.name}

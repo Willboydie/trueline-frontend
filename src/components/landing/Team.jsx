@@ -1,30 +1,32 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, Microscope, Code } from "lucide-react";
 
 export default function Team() {
   const team = [
     {
       name: "Sir James Hutchison",
-      role: "Founder",
-      icon: Award,
-      bio: "Chartered Surveyor with 25 years' experience in landscape design and construction project management.",
-      accent: "from-[#0A1E3A] to-[#123D73]"
+      role: "Founder / CEO",
+      photo: "/James_photo.png",
+      bio: "A Chartered Surveyor with 25 years' experience in landscape design and construction project management, James has a wealth of experience in outdoor construction projects. He founded TrueLine Lasers because he knows all too well what can go wrong and is determined to empower the industry to do better.",
     },
     {
       name: "William Boyd",
-      role: "Co-Founder, Head of Research & Development",
-      icon: Code,
-      bio: "Mathematics graduate and embedded systems programmer. Responsible for prototype development and delivery.",
-      accent: "from-[#0A1E3A] to-[#123D73]"
+      role: "Co-Founder / CTO",
+      photo: "/WB_photo_website.png",
+      bio: "A mathematics graduate and embedded systems programmer with a wide-ranging skill set, William leads the technical development team. He oversees the entire pipeline: from PCB traces and physical modelling to firmware infrastructure and frontend connectivity.",
     },
     {
-      name: "Dr. Fraser Clark",
-      role: "Co-Founder, Electronics & Optics Specialist",
-      icon: Microscope,
-      bio: "Specialist in optics, electrical engineering and embedded systems, bringing deep technical expertise to the TrueLine research & development team.",
-      accent: "from-[#0A1E3A] to-[#123D73]"
-    }
+      name: "Fraser Clark",
+      role: "Co-Founder / Electronics and Optics Specialist",
+      photo: "/Fraser_photo.png",
+      bio: "Leaving retirement after an impressive academic career in optics, electrical engineering and embedded systems, Fraser brings deep expertise and a broad technical knowledge to the TrueLine team.",
+    },
+    {
+      name: "Vedika Kumar",
+      role: "Technical Graduate Intern",
+      photo: "/Vedika_photo.png",
+      bio: "With a master's degree in Sensors and Imaging from Glasgow and Edinburgh universities, Vedika is a bright spark bringing fresh ideas to the technical development.",
+    },
   ];
 
   return (
@@ -45,7 +47,7 @@ export default function Team() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {team.map((member, index) => (
             <motion.div
               key={index}
@@ -55,11 +57,13 @@ export default function Team() {
               transition={{ duration: 0.5, delay: index * 0.15 }}
               className="group bg-white rounded-2xl overflow-hidden border border-transparent hover:border-[#1E3A8A]/30 transition-all duration-300"
             >
-              {/* Icon Header */}
-              <div className="h-32 sm:h-40 bg-[#1B5E20] flex items-center justify-center relative overflow-hidden">
-                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 flex items-center justify-center">
-                  <member.icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-                </div>
+              {/* Photo Header */}
+              <div className="h-56 sm:h-64 bg-[#1B5E20] relative overflow-hidden">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
 
               {/* Content */}
