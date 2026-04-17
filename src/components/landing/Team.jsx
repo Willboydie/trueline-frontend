@@ -13,7 +13,7 @@ export default function Team() {
       name: "William Boyd",
       role: "Co-Founder / CTO",
       photo: "/WB_photo_website.png",
-      bio: "A mathematics graduate and embedded systems programmer with a wide-ranging skill set, William leads the technical development team. He oversees the entire pipeline: from PCB traces and physical modelling to firmware infrastructure and frontend connectivity.",
+      bio: "An applied mathematician and embedded systems programmer with a wide-ranging skill set, William leads the technical development team. He oversees the entire pipeline: from PCB traces and physical modelling to firmware infrastructure and frontend connectivity.",
     },
     {
       name: "Fraser Clark",
@@ -58,7 +58,7 @@ export default function Team() {
               className="group bg-white rounded-2xl overflow-hidden border border-transparent hover:border-[#1E3A8A]/30 transition-all duration-300"
             >
               {/* Photo Header */}
-              <div className="h-56 sm:h-64 bg-[#1B5E20] relative overflow-hidden">
+              <div className="h-72 sm:h-80 bg-[#1B5E20] relative overflow-hidden">
                 <img
                   src={member.photo}
                   alt={member.name}
