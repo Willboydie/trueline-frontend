@@ -67,7 +67,7 @@ export default function StickyHeader() {
           onClick={() => handleNav("#contact")}
           className="hidden lg:block px-6 py-3 bg-[#1B5E20] hover:bg-[#154A19] text-white text-sm font-medium rounded-xl transition-all duration-200"
         >
-          Request a Demo
+          Get In Touch
         </button>
 
         {/* Mobile Toggle */}

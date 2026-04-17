@@ -51,7 +51,7 @@ function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function renderEmailHtml({ name, company, email, role, project_description }) {
+function renderEmailHtml({ name, company, email, role, project_description, inquiry_type }) {
   const row = (label, value) => `
     <tr>
       <td style="padding:8px 12px;font-weight:600;color:#111;white-space:nowrap;">${escapeHtml(label)}</td>
@@ -66,7 +66,7 @@ function renderEmailHtml({ name, company, email, role, project_description }) {
         <tr>
           <td style="background:#111113;padding:20px 24px;">
             <h1 style="color:#fff;margin:0;font-size:18px;letter-spacing:0.5px;">
-              <span style="color:#E53935;">TrueLine</span> Lasers &mdash; New Demo Request
+              <span style="color:#E53935;">TrueLine</span> Lasers &mdash; ${escapeHtml(inquiry_type || 'New Enquiry')}
             </h1>
           </td>
         </tr>
@@ -127,7 +127,14 @@ export const handler = async (event) => {
   const payload = parseBody(event);
   if (payload === null) return fail(400, 'Invalid JSON body', origin);
 
-  const { name, company = '', email, role = '', project_description = '' } = payload || {};
+  const {
+    name,
+    company = '',
+    email,
+    role = '',
+    project_description = '',
+    inquiry_type = 'Demo Request',
+  } = payload || {};
 
   if (!name || typeof name !== 'string' || !name.trim()) {
     return fail(400, 'Name is required', origin);
@@ -151,8 +158,8 @@ export const handler = async (event) => {
     return fail(500, 'Email service is not configured', origin);
   }
 
-  const html = renderEmailHtml({ name, company, email, role, project_description });
-  const subject = `TrueLine demo request - ${name}${company ? ` (${company})` : ''}`;
+  const html = renderEmailHtml({ name, company, email, role, project_description, inquiry_type });
+  const subject = `TrueLine Lasers - ${inquiry_type}: ${name}${company ? ` (${company})` : ''}`;
 
   try {
     const resp = await fetch(RESEND_URL, {

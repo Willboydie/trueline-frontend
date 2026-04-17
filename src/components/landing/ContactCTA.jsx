@@ -1,122 +1,50 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, CheckCircle, ArrowRight } from "lucide-react";
+import { AlertCircle, CheckCircle, ArrowRight } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+const EMPTY_FORM = {
+  name: "",
+  company: "",
+  email: "",
+  role: "",
+  project_description: "",
+};
+
 export default function ContactCTA() {
-  const [formData, setFormData] = useState({
-    name: "",
-    company: "",
-    email: "",
-    role: "",
-    project_description: ""
-  });
+  const [formData, setFormData] = useState(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e, inquiryType = "Demo Request") => {
     e.preventDefault();
-    
-    // Validate required fields
+
     if (!formData.name || !formData.email) {
-      alert("Please fill in your name and email address.");
+      setError("Please fill in your name and email address.");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+    setError(null);
+
     try {
-      // Create the contact inquiry
-      await base44.entities.ContactInquiry.create(formData);
-      
-      const emailBody = `
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #1D1D1F; }
-    .container { max-width: 600px; margin: 0 auto; background: #ffffff; }
-    .header { background: #1B5E20; padding: 32px 24px; text-align: center; }
-    .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; }
-    .content { padding: 32px 24px; }
-    .badge { display: inline-block; background: #F5F7F6; color: #1B5E20; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
-    .field { margin-bottom: 20px; }
-    .field-label { font-size: 13px; font-weight: 600; color: #4A4A4A; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-    .field-value { font-size: 16px; color: #1D1D1F; font-weight: 500; }
-    .description { background: #F5F7F6; padding: 20px; border-radius: 12px; margin-top: 24px; }
-    .footer { padding: 24px; text-align: center; color: #4A4A4A; font-size: 13px; border-top: 1px solid #F5F7F6; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>TrueLine Lasers</h1>
-    </div>
-    <div class="content">
-      <span class="badge">${inquiryType}</span>
-      
-      <div class="field">
-        <div class="field-label">Name</div>
-        <div class="field-value">${formData.name}</div>
-      </div>
-      
-      <div class="field">
-        <div class="field-label">Email</div>
-        <div class="field-value"><a href="mailto:${formData.email}" style="color: #1B5E20; text-decoration: none;">${formData.email}</a></div>
-      </div>
-      
-      <div class="field">
-        <div class="field-label">Company</div>
-        <div class="field-value">${formData.company || 'Not provided'}</div>
-      </div>
-      
-      <div class="field">
-        <div class="field-label">Role</div>
-        <div class="field-value">${formData.role || 'Not provided'}</div>
-      </div>
-      
-      ${formData.project_description ? `
-      <div class="description">
-        <div class="field-label" style="margin-bottom: 12px;">Project Description</div>
-        <div style="color: #1D1D1F; line-height: 1.6;">${formData.project_description}</div>
-      </div>
-      ` : ''}
-    </div>
-    <div class="footer">
-      <p>This inquiry was submitted via the TrueLine Lasers website contact form.</p>
-    </div>
-  </div>
-</body>
-</html>`;
-      
-      // Send email notification to both recipients
-      await base44.integrations.Core.SendEmail({
-        to: "james@truelinelasers.com",
-        subject: `TrueLine Lasers - ${inquiryType}: ${formData.name}`,
-        body: emailBody
+      await base44.entities.ContactInquiry.create({
+        ...formData,
+        inquiry_type: inquiryType,
       });
-      
-      await base44.integrations.Core.SendEmail({
-        to: "wave@mbm.dev",
-        subject: `TrueLine Lasers - ${inquiryType}: ${formData.name}`,
-        body: emailBody
-      });
-      
+
       setSubmitted(true);
-      setFormData({
-        name: "",
-        company: "",
-        email: "",
-        role: "",
-        project_description: ""
-      });
-      
+      setFormData(EMPTY_FORM);
       setTimeout(() => setSubmitted(false), 5000);
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setError(
+        "Sorry — we couldn't send your message. Please try again in a moment, or email us directly at info@truelinelasers.com."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -158,6 +86,15 @@ export default function ContactCTA() {
             </div>
           ) : (
             <form onSubmit={(e) => e.preventDefault()} className="space-y-4 sm:space-y-6">
+              {error && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200"
+                >
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-800">{error}</p>
+                </div>
+              )}
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-[#0A1E3A] mb-2">Name *</label>
@@ -217,21 +154,11 @@ export default function ContactCTA() {
                 <Button
                   type="button"
                   disabled={isSubmitting}
-                  onClick={(e) => handleSubmit(e, "Demo Request")}
+                  onClick={(e) => handleSubmit(e, "Contact Request")}
                   className="w-full sm:flex-1 bg-[#1B5E20] hover:bg-[#154A19] text-white font-medium py-4 text-base rounded-xl transition-all duration-200"
                 >
-                  {isSubmitting ? "Sending..." : "Request a Demo"}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button
-                  type="button"
-                  disabled={isSubmitting}
-                  variant="outline"
-                  className="w-full sm:flex-1 border-2 border-[#1B5E20] bg-white text-[#1B5E20] hover:bg-[#1B5E20] hover:text-white font-medium py-4 text-base rounded-xl transition-all duration-200"
-                  onClick={(e) => handleSubmit(e, "Sales Inquiry")}
-                >
-                  <Send className="w-5 h-5 mr-2" />
-                  {isSubmitting ? "Sending..." : "Contact Sales"}
                 </Button>
               </div>
             </form>
