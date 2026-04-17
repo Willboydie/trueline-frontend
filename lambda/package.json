@@ -1,0 +1,11 @@
+{
+  "name": "trueline-send-email-lambda",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AWS Lambda: receives contact-form submissions and sends email via Resend.",
+  "main": "index.mjs",
+  "engines": {
+    "node": ">=20"
+  }
+}

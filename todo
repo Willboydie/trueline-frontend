@@ -1,2 +1,2 @@
-
-
+add a database with email counting to protect against users hitting Resend errors if limits are breached.
+Basically get alerts for when you are close to breaching form submission limits so you can upgrade.

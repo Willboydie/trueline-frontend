@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
 export default function ContactSection() {
   const [form, setForm] = useState({
@@ -16,6 +16,7 @@ export default function ContactSection() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,9 +25,18 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    await base44.entities.ContactInquiry.create(form);
-    setSubmitting(false);
-    setSubmitted(true);
+    setError(null);
+    try {
+      await base44.entities.ContactInquiry.create(form);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setError(
+        "Sorry - we couldn't send your message. Please try again in a moment, or email us directly at info@truelinelasers.com."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -99,6 +109,15 @@ export default function ContactSection() {
                 onSubmit={handleSubmit}
                 className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.04] space-y-5"
               >
+                {error && (
+                  <div
+                    role="alert"
+                    className="flex items-start gap-3 p-4 rounded-xl bg-[#E53935]/10 border border-[#E53935]/30"
+                  >
+                    <AlertCircle className="w-5 h-5 text-[#E53935] flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-red-200">{error}</p>
+                  </div>
+                )}
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-sm text-gray-400 mb-1.5">

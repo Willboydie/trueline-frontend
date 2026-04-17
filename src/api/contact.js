@@ -1,17 +1,17 @@
 /**
- * Contact API - Dummy implementation
- * Replace with your backend (e.g. Formspree, custom API, etc.)
+ * Contact API - Submits contact-form inquiries via the email backend
+ * (API Gateway -> Lambda -> Resend). The Lambda is responsible for
+ * formatting and delivering the email to the configured recipients.
  */
+import { emailApi } from './email';
 
 export const contactApi = {
   /**
-   * Create a contact inquiry
+   * Create a contact inquiry.
    * @param {Object} data - { name, company, email, role, project_description }
    * @returns {Promise<void>}
    */
   async create(data) {
-    // TODO: Implement - e.g. POST to your API, Formspree, etc.
-    console.debug('[Contact API] create:', data);
-    return Promise.resolve();
+    await emailApi.send(data);
   },
 };

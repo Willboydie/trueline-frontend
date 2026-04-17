@@ -1,0 +1,225 @@
+================================================================================
+  TRUELINE LASERS — FRONTEND SYSTEM ARCHITECTURE
+  Email (Resend + AWS Lambda) & Analytics (Google Analytics 4)
+================================================================================
+
+--------------------------------------------------------------------------------
+OVERVIEW
+--------------------------------------------------------------------------------
+
+This document describes the architecture for:
+  1. Contact form email delivery via AWS Lambda + Resend
+  2. Website visit tracking via Google Analytics 4 (GA4)
+
+The frontend is a static React/Vite application hosted on AWS S3 behind AWS CloudFront. 
+There is no traditional server. Backend logic is handled exclusively by a single 
+serverless Lambda function.
+
+
+--------------------------------------------------------------------------------
+SYSTEM DIAGRAM
+--------------------------------------------------------------------------------
+
+  [ User's Browser ]
+       |
+       |  (1) Page load / navigation
+       |─────────────────────────────────────────────► [ Google Analytics 4 ]
+       |                                                  (Google's servers)
+       |
+       |  (2) Contact form submission
+       |
+       ▼
+  [ AWS API Gateway ]  ──────►  [ AWS Lambda ]  ──────►  [ Resend API ]
+   (HTTP endpoint)              (Node.js fn)              (email delivery)
+
+
+--------------------------------------------------------------------------------
+COMPONENTS
+--------------------------------------------------------------------------------
+
+1. AWS S3 (already in use)
+   - Hosts the compiled React/Vite static build output
+   - No changes required for either integration
+   - Optionally paired with CloudFront as a CDN
+
+2. Google Analytics 4
+   - A single <script> tag added to index.html
+   - Tracks page views, sessions, user geography, device type, traffic sources
+   - All tracking happens client-side; no backend involvement
+   - Data is sent directly from the browser to Google's collection servers
+
+3. AWS API Gateway
+   - Exposes a single HTTPS POST endpoint, e.g.:
+       POST https://<id>.execute-api.<region>.amazonaws.com/send-email
+   - Receives the contact form JSON payload from the browser
+   - Forwards the request to the Lambda function
+   - Handles CORS so the browser can call it from the S3/CloudFront domain
+
+4. AWS Lambda
+   - A small Node.js function (~30 lines)
+   - Reads the Resend API key from an environment variable (never exposed to
+     the browser)
+   - Validates the incoming request (name, email required)
+   - Calls the Resend API to send the formatted HTML email
+   - Returns a success or error response to API Gateway
+
+5. Resend (resend.com)
+   - Transactional email delivery service
+   - Receives the HTML email payload from Lambda and delivers it to recipients
+   - Provides a dashboard showing delivery status, opens, and bounces
+   - Requires a verified sending domain (e.g. noreply@truelinelasers.com)
+
+
+--------------------------------------------------------------------------------
+DATA FLOW — CONTACT FORM SUBMISSION
+--------------------------------------------------------------------------------
+
+  Step 1:  User fills in the contact form and clicks "Request a Demo"
+  Step 2:  The browser sends a POST request to the API Gateway endpoint
+           with JSON: { name, company, email, role, project_description }
+  Step 3:  API Gateway forwards the request to the Lambda function
+  Step 4:  Lambda validates the payload and calls Resend's API
+  Step 5:  Resend delivers the HTML email to both configured recipients
+  Step 6:  Lambda returns { success: true } to API Gateway
+  Step 7:  API Gateway returns 200 OK to the browser
+  Step 8:  The contact form shows the "Thank You" confirmation state
+
+  On failure (e.g. Resend error):
+  - Lambda returns a 500 error
+  - The browser catches this and can display an error message to the user
+  - The submission is NOT silently lost (unlike the current dummy implementation)
+
+
+--------------------------------------------------------------------------------
+DATA FLOW — VISIT TRACKING
+--------------------------------------------------------------------------------
+
+  Step 1:  User loads any page of the site
+  Step 2:  The GA4 script tag fires automatically, sending a page_view event
+           to Google's collection endpoint (www.google-analytics.com)
+  Step 3:  The analytics.js file's logUserInApp() calls gtag() on navigation
+  Step 4:  Data appears in the GA4 dashboard within 24-48 hours (real-time
+           view available with a ~30 second delay)
+
+  GA4 captures automatically (no extra code):
+  - Page views and session duration
+  - Traffic sources (organic, direct, referral)
+  - User geography and device/browser type
+  - Bounce rate and engagement metrics
+
+
+--------------------------------------------------------------------------------
+COSTS
+--------------------------------------------------------------------------------
+
+All figures are as of 2026. Assumes low-to-moderate traffic (marketing site).
+
+  SERVICE              FREE TIER                   PAID (if exceeded)
+  ─────────────────────────────────────────────────────────────────────────────
+  Google Analytics 4   Unlimited (always free)     N/A
+                       Standard properties have
+                       no volume charge
+
+  AWS Lambda           1,000,000 requests/month    $0.20 per additional
+                       400,000 GB-seconds compute  1,000,000 requests
+                       (always free, no expiry)    ~$0.0000002 per form submit
+
+  AWS API Gateway      1,000,000 requests/month    $3.50 per additional
+  (HTTP API)           for 12 months               1,000,000 requests
+                       After 12 months: no free    ~$0.0000035 per form submit
+                       tier, but cost is minimal
+
+  Resend               3,000 emails/month          Pro: $20/month
+                       100 emails/day cap          (50,000 emails/month)
+                       1 verified domain           Starter: Free (3k/month)
+
+  AWS S3               Already in use — no         Negligible; ~$0.023/GB
+                       additional cost for this    stored + $0.0004/10k GETs
+                       architecture
+
+  ─────────────────────────────────────────────────────────────────────────────
+  ESTIMATED MONTHLY COST AT CURRENT SCALE:    ~$0.00 (within all free tiers)
+  ESTIMATED MONTHLY COST AT 500 SUBMISSIONS:  ~$0.00 (still within free tiers)
+  ESTIMATED MONTHLY COST AT 5,000 EMAILS/MO:  ~$20.00 (Resend Pro only)
+  ─────────────────────────────────────────────────────────────────────────────
+
+  Practical note: At typical B2B marketing site volumes (<200 leads/month),
+  this entire stack costs nothing beyond existing S3 charges.
+
+
+--------------------------------------------------------------------------------
+LIMITING FACTORS
+--------------------------------------------------------------------------------
+
+1. RESEND FREE TIER — 100 EMAILS/DAY
+   The most likely constraint. 100 emails/day = ~3,000/month. Each contact form
+   submission sends 2 emails (james@ and wave@), so the effective lead capacity
+   is ~50 new leads/day before hitting the daily cap.
+
+   If the daily cap is hit:
+   - Resend returns a 429 error
+   - Lambda will return a 500 to the browser
+   - The user sees an error (not a false success)
+   - Resolution: Upgrade to Resend Pro ($20/month) to raise limit to ~1,600/day
+
+2. RESEND DOMAIN VERIFICATION
+   Resend requires you to verify a sending domain by adding DNS records to
+   truelinelasers.com. Until this is done, emails will either fail or send
+   from a Resend subdomain. This is a one-time setup step.
+
+3. GA4 DATA RETENTION
+   By default, GA4 retains event-level data for only 2 months. To retain data
+   for up to 14 months, this must be manually changed in:
+     GA4 Admin → Data Settings → Data Retention → 14 months
+   Aggregated reporting data (in the dashboard) is retained indefinitely.
+
+4. GA4 CONSENT / AD BLOCKERS
+   GA4 is blocked by most ad blockers (uBlock Origin, Brave, etc.). Depending
+   on your audience, this can undercount visits by 20-40%. If precise traffic
+   numbers are critical, consider supplementing with server-side logging via
+   CloudFront access logs (which capture all requests regardless of blockers).
+
+5. AWS API GATEWAY FREE TIER EXPIRY
+   The API Gateway free tier (1M requests/month) only applies for the first
+   12 months of your AWS account. After that, the charge is $3.50 per million
+   requests — still negligible at this scale, but worth being aware of.
+
+6. LAMBDA COLD STARTS
+   The Lambda function may experience a cold start (200-500ms delay) if it
+   hasn't been invoked recently. For a contact form this is imperceptible to
+   the user, but worth noting. No action required.
+
+7. CORS CONFIGURATION
+   The API Gateway must be configured to allow requests from your S3/CloudFront
+   domain. If the domain changes (e.g. from CloudFront URL to custom domain),
+   the CORS allowed-origins setting must be updated in API Gateway.
+
+
+--------------------------------------------------------------------------------
+ENVIRONMENT VARIABLES (Lambda)
+--------------------------------------------------------------------------------
+
+  RESEND_API_KEY          Your Resend API key (never committed to source code)
+  TO_EMAIL_PRIMARY        info@james-hutchison.com
+  TO_EMAIL_SECONDARY      williamteboyd@gmail.com
+  ALLOWED_ORIGIN          https://www.truelinelasers.com (for CORS)
+
+
+--------------------------------------------------------------------------------
+ONE-TIME SETUP CHECKLIST
+--------------------------------------------------------------------------------
+
+  [ ] Create Resend account at resend.com
+  [ ] Verify truelinelasers.com domain in Resend (add DNS TXT/CNAME records)
+  [ ] Create AWS Lambda function (Node.js runtime)
+  [ ] Add RESEND_API_KEY as Lambda environment variable
+  [ ] Create AWS API Gateway HTTP API, attach Lambda integration
+  [ ] Configure CORS on API Gateway for your site's domain
+  [ ] Update src/api/email.js to fetch() the API Gateway endpoint
+  [ ] Create GA4 property at analytics.google.com
+  [ ] Add GA4 measurement script to index.html
+  [ ] Update src/api/analytics.js to call gtag()
+  [ ] In GA4 Admin, set data retention to 14 months
+  [ ] Deploy updated frontend build to S3
+
+================================================================================
