@@ -16,7 +16,7 @@ export default function Team() {
       bio: "An applied mathematics graduate and embedded systems programmer with a wide-ranging skill set, William leads the technical development team. He oversees the entire pipeline: from PCB traces and physical modelling to firmware infrastructure and frontend connectivity.",
     },
     {
-      name: "Fraser Clark",
+      name: "Dr. Fraser Clark",
       role: "Co-Founder / Electronics and Optics Specialist",
       photo: "/Fraser_photo.png",
       bio: "Leaving retirement after an impressive academic career in optics, electrical engineering and embedded systems, Fraser brings deep expertise and a broad technical knowledge to the TrueLine team.",
@@ -25,7 +25,7 @@ export default function Team() {
       name: "Vedika Kumar",
       role: "Technical Graduate Intern",
       photo: "/Vedika_photo.png",
-      bio: "With a master's degree in Sensors and Imaging from Glasgow and Edinburgh universities, Vedika is a bright spark bringing fresh ideas to the technical development.",
+      bio: "With a master's degree in Sensors and Imaging from Glasgow and Edinburgh universities, Vedika is a bright spark bringing fresh ideas to the technical development team.",
     },
   ];
 
@@ -40,11 +40,11 @@ export default function Team() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#1D1D1F] mb-6 sm:mb-8 tracking-tight px-4 sm:px-0">
-            Management Team
+            Meet The Team
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-[#4A4A4A] max-w-3xl mx-auto font-light px-4 sm:px-0">
+          {/* <p className="text-base sm:text-lg md:text-xl text-[#4A4A4A] max-w-3xl mx-auto font-light px-4 sm:px-0">
             Combining decades of expertise in surveying, optics, and software engineering.
-          </p>
+          </p> */}
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -107,11 +107,11 @@ export default function ContactCTA() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1D1D1F] mb-3">Company</label>
+                  <label className="block text-sm font-medium text-[#0A1E3A] mb-2">Company</label>
                   <Input
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="bg-white border-[#1D1D1F]/20 text-[#1D1D1F] placeholder:text-[#4A4A4A]/50 focus:border-[#1B5E20] focus:ring-2 focus:ring-[#1B5E20]/20 h-12 rounded-xl"
+                    className="bg-white border-[#0A1E3A]/20 text-[#0A1E3A] placeholder:text-[#4A5568]/50 focus:border-[#00E676] focus:ring-1 focus:ring-[#00E676]"
                     placeholder="Company Name"
                   />
                 </div>

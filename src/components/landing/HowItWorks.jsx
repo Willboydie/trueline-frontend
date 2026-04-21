@@ -14,7 +14,7 @@ export default function HowItWorks() {
       icon: MapPin,
       number: "02",
       title: "Position Device",
-      description: "Place the TrueLine device on site at a convenient reference point."
+      description: "Place the TrueLine device on site at a known reference point."
     },
     {
       icon: ScanLine,

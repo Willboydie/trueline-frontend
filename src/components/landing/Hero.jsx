@@ -20,26 +20,16 @@ export default function Hero() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F7F6] mb-10"
-          >
-            <span className="text-sm text-[#4A4A4A] font-medium tracking-wide">Next-Generation Construction Technology</span>
-          </motion.div>
+
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#1D1D1F] mb-6 sm:mb-8 tracking-tight leading-[1.1] px-4 sm:px-0">
-            Revolutionising Construction
-            <br />
-            Site Setting-Out
+            Upload. Project. Build.
           </h1>
 
           {/* Subheading */}
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#4A4A4A] max-w-3xl mx-auto mb-12 sm:mb-16 leading-relaxed font-light px-4 sm:px-0">
-            Portable laser projection technology that delivers architects' plans directly onto site — improving accuracy, reducing setup time, and cutting labour costs.
+            A portable laser projection system which displays digital building plans on the site floor at full scale.
           </p>
 
           {/* CTAs */}

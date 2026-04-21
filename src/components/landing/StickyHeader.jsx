@@ -33,7 +33,7 @@ export default function StickyHeader() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#1D1D1F]/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between min-h-24 lg:min-h-28 py-2">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between min-h-36 lg:min-h-44 py-2">
         {/* Logo / home */}
         <Link
           to="/"
@@ -42,9 +42,9 @@ export default function StickyHeader() {
           aria-label="TrueLine home"
         >
           <img
-            src="/TrueLine Logo.png"
+            src="/TRUELINE-logo-white-background.png"
             alt=""
-            className="h-[4.5rem] lg:h-[5.5rem] w-auto max-w-[min(100%,20rem)] object-contain object-left"
+            className="h-14 lg:h-20 w-auto max-w-[min(100%,34rem)] object-contain object-left"
             decoding="async"
           />
         </Link>
