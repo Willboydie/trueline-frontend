@@ -67,7 +67,7 @@ export default function SolutionSection() {
           >
             <div className="rounded-2xl overflow-hidden">
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6985c356bc894bb40ecced64/d35c5d2dd_pexels-pixabay-159375.jpg"
+                src="modern_marking.png"
                 alt="Construction site floor work"
                 className="w-full aspect-[4/3] object-cover"
               />

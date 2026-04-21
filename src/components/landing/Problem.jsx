@@ -48,7 +48,7 @@ export default function ProblemSection() {
           className="mb-16 rounded-2xl overflow-hidden max-w-2xl mx-auto"
         >
           <img
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6985c356bc894bb40ecced64/f9fa100a0_pexels-jimmy-liao-3615017-17150070.jpg"
+            src="traditional_marking.png"
             alt="Construction workers on site"
             className="w-full h-[280px] object-cover"
           />
@@ -100,22 +100,6 @@ export default function ProblemSection() {
             </motion.div>
           ))}
         </div>
-
-        {/* Bottom context */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 p-6 rounded-2xl border border-[#0A1E3A]/10 bg-white/50"
-        >
-          <p className="text-[#4A5568] text-sm leading-relaxed max-w-4xl">
-            Construction sites are frequently muddy and wet or dry and sandy,
-            with constant traffic that erases paint markings and displaces string
-            lines. This leads to inaccuracies in foundations, walls, and openings
-            such as doors and windows — increasing rework, delays, and costs.
-          </p>
-        </motion.div>
       </div>
     </section>
   );
