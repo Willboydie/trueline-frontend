@@ -45,12 +45,12 @@ export default function ProblemSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 rounded-2xl overflow-hidden max-w-2xl mx-auto"
+          className="mb-16 rounded-2xl overflow-hidden max-w-6xl mx-auto"
         >
           <img
             src="traditional_marking.png"
             alt="Construction workers on site"
-            className="w-full h-[280px] object-cover"
+            className="w-full h-[420px] object-cover object-[center_65%]"
           />
         </motion.div>
 
