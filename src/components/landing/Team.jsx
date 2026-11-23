@@ -22,10 +22,10 @@ export default function Team() {
       bio: "Leaving retirement after an impressive academic career in optics, electrical engineering and embedded systems, Fraser brings deep expertise and a broad technical knowledge to the TrueLine team.",
     },
     {
-      name: "Vedika Kumar",
-      role: "Technical Graduate Intern",
-      photo: "/Vedika_photo.png",
-      bio: "With a master's degree in Sensors and Imaging from Glasgow and Edinburgh universities, Vedika is a bright spark bringing fresh ideas to the technical development team.",
+      name: "Alexander Satkauskas",
+      role: "Technical Intern",
+      photo: "/alexander-profile-pic.jpeg",
+      bio: "Interested in hardware development from an early age and now working on real systems before he even begins his undergraduate degree, Alexander is a bright spark in the engineering team with a promising future. TrueLine is delighted to be supporting his development and benefit hugely from his growing expertise.",
     },
   ];
 
